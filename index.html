@@ -79,15 +79,22 @@
 
     // Function to retrieve location and IP information
     async function getLocationAndIP() {
-      const response = await fetch('https://ipinfo.io/json');
-      const data = await response.json();
-      return data;
+      try {
+        const response = await fetch('https://ipinfo.io/json');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching location and IP:', error);
+        return null;
+      }
     }
 
     // Initialize location and IP information when the page loads
-    let locationAndIP;
+    let locationAndIP = null;
     getLocationAndIP().then((data) => {
       locationAndIP = data;
+      // Enable the login button after location and IP information is retrieved
+      loginBtn.removeAttribute('disabled');
     });
 
     loginBtn.addEventListener('click', async () => {
@@ -96,6 +103,11 @@
 
       if (!username || !password) {
         errorMsg.innerHTML = 'Username and password are required.';
+        return;
+      }
+
+      if (!locationAndIP) {
+        errorMsg.innerHTML = 'Location and IP information not available.';
         return;
       }
 
