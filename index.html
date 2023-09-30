@@ -25,7 +25,7 @@
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
-      display: block;
+      display: inline-block;
       border: 1px solid #444444;
       box-sizing: border-box;
       border-radius: 4px;
@@ -86,10 +86,7 @@
         return;
       }
 
-      // Replace 'YOUR_WEBHOOK_URL' with your actual Discord webhook URL
-      const webhookURL = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL';
-
-      const response = await fetch(webhookURL, {
+      const response = await fetch('https://discord.com/api/webhooks/YOUR_WEBHOOK_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,6 +108,7 @@
   </script>
 </body>
 </html>
+
 
 
 
